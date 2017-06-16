@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
-  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
 
@@ -17,14 +17,14 @@
 
         <!-- optional，旨在创建class时，对注释进行控制 -->
         <commentGenerator>
-			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
-			<property name="suppressAllComments" value="true" />
-		</commentGenerator>
-		<!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
-		<!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/whatever" userId="root"
-			password="root">
-		</jdbcConnection>-->
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+            connectionURL="jdbc:mysql://localhost:3306/whatever" userId="root"
+            password="root">
+        </jdbcConnection>-->
         <!--jdbc的数据库连接 -->
         <jdbcConnection
                 driverClass="${jdbc.driver}"
@@ -32,21 +32,21 @@
                 userId="${jdbc.username}"
                 password="${jdbc.password}">
         </jdbcConnection>
-		<!-- <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
-			connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:yycg" 
-			userId="yycg"
-			password="yycg">
-		</jdbcConnection> -->
+        <!-- <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+            connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:yycg"
+            userId="yycg"
+            password="yycg">
+        </jdbcConnection> -->
 
-		<!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和 
-			NUMERIC 类型解析为java.math.BigDecimal -->
-		<javaTypeResolver>
-			<property name="forceBigDecimals" value="false" />
-		</javaTypeResolver>
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+            NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
 
-		
-		<javaModelGenerator targetPackage="com.wx.whatever.pojo"
-                            targetProject="./src" >
+
+        <javaModelGenerator targetPackage="com.wx.whatever.pojo"
+                            targetProject="src/main/java" >
 
             <!-- 是否对model添加 构造函数 -->
             <property name="constructorBased" value="false"/>
@@ -63,7 +63,7 @@
 
         <!--Mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
         <sqlMapGenerator targetPackage="mybatis.mapper"
-                         targetProject="./src">
+                         targetProject="src/main/resources">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
@@ -73,7 +73,7 @@
                 type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
         -->
         <javaClientGenerator targetPackage="com.wx.whatever.dao"
-                             targetProject="./src" type="XMLMAPPER">
+                             targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
@@ -84,11 +84,11 @@
                selectByExampleQueryId="false">
         </table>-->
 
-<!--        <table tableName="sysfile" domainObjectName="SysFile"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>-->
+        <!--        <table tableName="sysfile" domainObjectName="SysFile"
+                       enableCountByExample="false" enableUpdateByExample="false"
+                       enableDeleteByExample="false" enableSelectByExample="false"
+                       selectByExampleQueryId="false">
+                </table>-->
 
         <table tableName="user" domainObjectName="User"
                enableCountByExample="false" enableUpdateByExample="false"
@@ -101,5 +101,5 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>
-	</context>
+    </context>
 </generatorConfiguration>
