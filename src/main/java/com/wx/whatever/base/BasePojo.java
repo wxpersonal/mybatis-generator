@@ -8,9 +8,6 @@ import java.util.Date;
  */
 public class BasePojo implements Serializable {
 
-    //主键id
-    private Integer id;
-
     //创建人
     private Integer createBy;
 
@@ -23,19 +20,12 @@ public class BasePojo implements Serializable {
     //修改时间
     private Date updateTime;
 
-    //删除标记
-    private Integer delete;
-
     //有效状态
     private Integer status;
 
-    public Integer getId() {
-        return id;
-    }
+    //删除标记
+    private Integer deleted;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getCreateBy() {
         return createBy;
@@ -69,14 +59,6 @@ public class BasePojo implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public Integer getDelete() {
-        return delete;
-    }
-
-    public void setDelete(Integer delete) {
-        this.delete = delete;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -84,4 +66,14 @@ public class BasePojo implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    public Integer getDelete() {
+        return deleted;
+    }
+
+    public void setDelete(Integer deleted) {
+        this.deleted = deleted;
+    }
+
+
 }
