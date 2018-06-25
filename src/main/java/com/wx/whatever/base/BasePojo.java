@@ -8,22 +8,34 @@ import java.util.Date;
  */
 public class BasePojo implements Serializable {
 
-    //创建人
+    /**
+     * 创建人
+     */
     private Integer createBy;
 
-    //创建时间
+    /**
+     * 创建时间
+     */
     private Date createTime;
 
-    //修改人
+    /**
+     * 修改人
+     */
     private Integer updateBy;
 
-    //修改时间
+    /**
+     * 修改时间
+     */
     private Date updateTime;
 
-    //有效状态
+    /**
+     * 有效状态
+     */
     private Integer status;
 
-    //删除标记
+    /**
+     * 删除标记
+     */
     private Integer deleted;
 
 
