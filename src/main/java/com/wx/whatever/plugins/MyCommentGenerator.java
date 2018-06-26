@@ -244,13 +244,8 @@ public class MyCommentGenerator implements CommentGenerator{
      * 普通方法的注释，这里主要是XXXMapper.java里面的接口方法的注释
      */
     public void addGeneralMethodComment(Method method, IntrospectedTable introspectedTable) {
-        if (suppressAllComments) {
-            return;
-        }
 
-        method.addJavaDocLine("/**");
-        addJavadocTag(method, false);
-        method.addJavaDocLine(" */");
+        return;
     }
 
 
@@ -291,8 +286,20 @@ public class MyCommentGenerator implements CommentGenerator{
     /**
      * 为模型类添加注释
      */
-    public void addModelClassComment(TopLevelClass arg0, IntrospectedTable arg1) {
+    public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
 
+        if (suppressAllComments) {
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        topLevelClass.addJavaDocLine("/**");
+        sb.append(" * ");
+        sb.append(introspectedTable.getFullyQualifiedTable());
+        sb.append(" ");
+        sb.append(getDateString());
+        topLevelClass.addJavaDocLine(sb.toString().replace("\n", " "));
+        topLevelClass.addJavaDocLine(" */");
     }
 
     /**

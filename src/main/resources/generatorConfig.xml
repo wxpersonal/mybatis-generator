@@ -20,7 +20,6 @@
         <plugin type="com.wx.whatever.plugins.MapperPlugin"/>
 
         <commentGenerator type="com.wx.whatever.plugins.MyCommentGenerator">
-            <property name="suppressAllComments" value="false" />
         </commentGenerator>
 
         <!-- optional，旨在创建class时，对注释进行控制 -->
@@ -39,11 +38,6 @@
                 userId="${jdbc.username}"
                 password="${jdbc.password}">
         </jdbcConnection>
-        <!-- <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
-            connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:yycg"
-            userId="yycg"
-            password="yycg">
-        </jdbcConnection> -->
 
         <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
             NUMERIC 类型解析为java.math.BigDecimal -->
@@ -99,14 +93,14 @@
 
         <table tableName="user" domainObjectName="User"
                enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="true"
-               selectByExampleQueryId="true">
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
         </table>
 
         <table tableName="system_file" domainObjectName="SysFile"
                enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="true"
-               selectByExampleQueryId="true">
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
         </table>
     </context>
 </generatorConfiguration>
