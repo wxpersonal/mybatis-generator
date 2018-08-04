@@ -1,4 +1,4 @@
-package com.wx.whatever.plugins;
+package me.weix.whatever.plugins;
 
 import java.util.List;
 
@@ -32,10 +32,10 @@ public class MapperPlugin extends PluginAdapter {
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
         interfaze.addMethod(generateSelectByIds(method,
                 introspectedTable));
-        interfaze.addMethod(generateDeleteLogicById(method,
-                introspectedTable));
-        interfaze.addMethod(generateDeleteLogicByIds(method,
-                introspectedTable));
+//        interfaze.addMethod(generateDeleteLogicById(method,
+//                introspectedTable));
+//        interfaze.addMethod(generateDeleteLogicByIds(method,
+//                introspectedTable));
         return true;
     }
 
@@ -49,15 +49,15 @@ public class MapperPlugin extends PluginAdapter {
         XmlElement parentElement = document.getRootElement();
 
         // 单个删除
-        XmlElement deleteLogicByIdElement = new XmlElement("update");
-        deleteLogicByIdElement.addAttribute(new Attribute("id", "deleteLogicByIds"));
-
-        deleteLogicByIdElement.addElement(
-                new TextElement(
-                        "update " + tableName + " set deleted = 1 where id = #{id} "
-                ));
-
-        parentElement.addElement(deleteLogicByIdElement);
+//        XmlElement deleteLogicByIdElement = new XmlElement("update");
+//        deleteLogicByIdElement.addAttribute(new Attribute("id", "deleteLogicByIds"));
+//
+//        deleteLogicByIdElement.addElement(
+//                new TextElement(
+//                        "update " + tableName + " set deleted = 1 where id = #{id} "
+//                ));
+//
+//        parentElement.addElement(deleteLogicByIdElement);
 
         // 批量查询
         XmlElement selectByIdsElement = new XmlElement("select");
@@ -74,17 +74,17 @@ public class MapperPlugin extends PluginAdapter {
 
         parentElement.addElement(selectByIdsElement);
 
-        // 批量删除
-        XmlElement deleteLogicByIdsElement = new XmlElement("update");
-        deleteLogicByIdsElement.addAttribute(new Attribute("id", "deleteLogicById"));
-
-        deleteLogicByIdsElement.addElement(
-                new TextElement(
-                        "update " + tableName + " set deleted = 1 where id in \n"
-                                + "\t<foreach item=\"item\" index=\"index\" collection=\"ids\" open=\"(\" separator=\",\" close=\")\">#{item}</foreach> "
-                ));
-
-        parentElement.addElement(deleteLogicByIdsElement);
+//        // 批量删除
+//        XmlElement deleteLogicByIdsElement = new XmlElement("update");
+//        deleteLogicByIdsElement.addAttribute(new Attribute("id", "deleteLogicById"));
+//
+//        deleteLogicByIdsElement.addElement(
+//                new TextElement(
+//                        "update " + tableName + " set deleted = 1 where id in \n"
+//                                + "\t<foreach item=\"item\" index=\"index\" collection=\"ids\" open=\"(\" separator=\",\" close=\")\">#{item}</foreach> "
+//                ));
+//
+//        parentElement.addElement(deleteLogicByIdsElement);
 
         return super.sqlMapDocumentGenerated(document, introspectedTable);
     }

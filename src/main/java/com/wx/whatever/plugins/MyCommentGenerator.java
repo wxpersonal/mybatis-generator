@@ -1,4 +1,4 @@
-package com.wx.whatever.plugins;
+package me.weix.whatever.plugins;
 
 
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
@@ -195,6 +195,7 @@ public class MyCommentGenerator implements CommentGenerator{
     public void addEnumComment(InnerEnum innerEnum, IntrospectedTable introspectedTable) {
         if (suppressAllComments) {
             return;
+
         }
         StringBuilder sb = new StringBuilder();
         innerEnum.addJavaDocLine("/**");
@@ -206,6 +207,7 @@ public class MyCommentGenerator implements CommentGenerator{
 
     /**
      * Java属性注释
+     *
      */
     public void addFieldComment(Field field, IntrospectedTable introspectedTable) {
         if (suppressAllComments) {
@@ -278,7 +280,6 @@ public class MyCommentGenerator implements CommentGenerator{
         compilationUnit.addFileCommentLine("/*");
         compilationUnit.addFileCommentLine("*");
         compilationUnit.addFileCommentLine("* "+compilationUnit.getType().getShortName()+".java");
-        compilationUnit.addFileCommentLine("* Copyright(C) 2017-2020 fendo公司");
         compilationUnit.addFileCommentLine("* @date "+sdf.format(new Date())+"");
         compilationUnit.addFileCommentLine("*/");
     }

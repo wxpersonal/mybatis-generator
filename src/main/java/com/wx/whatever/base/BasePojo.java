@@ -1,4 +1,4 @@
-package com.wx.whatever.base;
+package me.weix.whatever.base;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.wx.whatever.plugins;
+package me.weix.whatever.plugins;
 
 
 import org.mybatis.generator.api.IntrospectedColumn;
