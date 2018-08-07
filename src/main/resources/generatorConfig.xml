@@ -15,11 +15,11 @@
         <!-- 自动生成equals方法和hashcode方法 -->
         <!--<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>-->
 
-        <plugin type="com.wx.whatever.plugins.LombokPlugin"/>
+        <plugin type="me.weix.whatever.plugins.LombokPlugin"/>
 
-        <plugin type="com.wx.whatever.plugins.MapperPlugin"/>
+        <plugin type="me.weix.whatever.plugins.MapperPlugin"/>
 
-        <commentGenerator type="com.wx.whatever.plugins.MyCommentGenerator">
+        <commentGenerator type="me.weix.whatever.plugins.MyCommentGenerator">
         </commentGenerator>
 
         <!-- optional，旨在创建class时，对注释进行控制 -->
@@ -41,12 +41,12 @@
 
         <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
             NUMERIC 类型解析为java.math.BigDecimal -->
-        <javaTypeResolver>
+        <javaTypeResolver type="com.wx.whatever.plugins.MyJavaTypeResolver">
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
 
 
-        <javaModelGenerator targetPackage="com.wx.whatever.pojo"
+        <javaModelGenerator targetPackage="com.mychebao.aucsm.pojo"
                             targetProject="src/main/java" >
 
             <!-- 是否对model添加 构造函数 -->
@@ -56,7 +56,7 @@
             <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
             <property name="immutable" value="false"/>
             <!--实体类父类BasePojo-->
-            <property name="rootClass" value="com.wx.whatever.base.BasePojo"/>
+            <property name="rootClass" value="dragon.core.dal.support.BaseEntity"/>
             <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
             <property name="trimStrings" value="true"/>
 
@@ -73,34 +73,95 @@
                 type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
                 type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
         -->
-        <javaClientGenerator targetPackage="com.wx.whatever.dao"
+        <javaClientGenerator targetPackage="com.mychebao.aucsm.biz.dao"
                              targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
 
-        <!--<table tableName="user" domainObjectName="User"
+
+        <!--<table tableName="ams_bidprice" domainObjectName="AmsBidPrice" mapperName="AmsBidPriceDao"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="ams_car" domainObjectName="AmsCar" mapperName="AmsCarDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+
+        <table tableName="ams_car_delaylog" domainObjectName="AmsCarDelayLog" mapperName="AmsCarDelayLogDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="ams_follow" domainObjectName="AmsFollow" mapperName="AmsFollowDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="ams_intellect_bid" domainObjectName="AmsIntellectBid" mapperName="AmsIntellectBidDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="ams_order" domainObjectName="AmsOrder" mapperName="AmsOrderDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="ams_screen" domainObjectName="AmsScreen" mapperName="AmsScreenDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="ams_screen_conf" domainObjectName="AmsScreenConf" mapperName="AmsScreenConfDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="ams_win" domainObjectName="AmsWin" mapperName="AmsWinDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="ams_buyerforce" domainObjectName="BuyerForce" mapperName="BuyerForceDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="ams_buyer_operatelog" domainObjectName="BuyerOperateLog" mapperName="BuyerOperateLogDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
         </table>-->
 
-        <!--        <table tableName="sysfile" domainObjectName="SysFile"
-                       enableCountByExample="false" enableUpdateByExample="false"
-                       enableDeleteByExample="false" enableSelectByExample="false"
-                       selectByExampleQueryId="false">
-                </table>-->
-
-        <table tableName="user" domainObjectName="User"
+        <!--<table tableName="ams_follow_his" domainObjectName="AmsFollowHis" mapperName="AmsFollowHisDao"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-        </table>
+            <property name="useActualColumnNames" value="true"/>
+        </table>-->
 
-        <table tableName="system_file" domainObjectName="SysFile"
+        <table tableName="ams_car_viewlog" domainObjectName="AmsCarViewlog" mapperName="AmsCarViewlogDao"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
         </table>
+
+
     </context>
 </generatorConfiguration>

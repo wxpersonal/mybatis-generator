@@ -62,6 +62,7 @@ public class MapperPlugin extends PluginAdapter {
         // 批量查询
         XmlElement selectByIdsElement = new XmlElement("select");
         selectByIdsElement.addAttribute(new Attribute("id", "selectByIds"));
+        selectByIdsElement.addAttribute(new Attribute("resultMap", "BaseResultMap"));
 
 
         selectByIdsElement.addElement(
