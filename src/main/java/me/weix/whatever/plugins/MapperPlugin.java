@@ -2,14 +2,12 @@ package me.weix.whatever.plugins;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
@@ -30,6 +28,7 @@ public class MapperPlugin extends PluginAdapter {
                                                            Interface interfaze, IntrospectedTable introspectedTable) {
 
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
+        interfaze.addImportedType(new FullyQualifiedJavaType("java.util.List"));
         interfaze.addMethod(generateSelectByIds(method,
                 introspectedTable));
 //        interfaze.addMethod(generateDeleteLogicById(method,
@@ -111,7 +110,6 @@ public class MapperPlugin extends PluginAdapter {
         m.setVisibility(method.getVisibility());
         m.setReturnType(FullyQualifiedJavaType.getIntInstance());
         m.addParameter(new Parameter(new FullyQualifiedJavaType("Integer"), "id"));
-
         context.getCommentGenerator().addGeneralMethodComment(m,
                 introspectedTable);
         return m;
@@ -125,7 +123,7 @@ public class MapperPlugin extends PluginAdapter {
 
         m.setReturnType(FullyQualifiedJavaType.getIntInstance());
         m.addParameter(new Parameter(new FullyQualifiedJavaType("Integer[]"), "ids", "@Param(\"ids\")"));
-
+        m.setReturnType(new FullyQualifiedJavaType("java.util.List<"+ introspectedTable.getTableConfiguration().getDomainObjectName()+">"));
         context.getCommentGenerator().addGeneralMethodComment(m,
                 introspectedTable);
         return m;
