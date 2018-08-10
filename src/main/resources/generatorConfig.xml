@@ -46,7 +46,7 @@
         </javaTypeResolver>
 
 
-        <javaModelGenerator targetPackage="com.mychebao.aucsm.pojo"
+        <javaModelGenerator targetPackage="com.mychebao.aucsm.biz.pojo"
                             targetProject="src/main/java" >
 
             <!-- 是否对model添加 构造函数 -->
@@ -155,13 +155,46 @@
             <property name="useActualColumnNames" value="true"/>
         </table>-->
 
-        <table tableName="ams_car_viewlog" domainObjectName="AmsCarViewlog" mapperName="AmsCarViewlogDao"
+        <!--<table tableName="ams_car_viewlog" domainObjectName="AmsCarViewlog" mapperName="AmsCarViewlogDao"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="true"/>
         </table>
         <table tableName="ams_bidlog" domainObjectName="AmsBidLog" mapperName="AmsBidLogDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>-->
+
+        <table tableName="ams_price_snapshot" domainObjectName="AmsPriceSnapshot" mapperName="AmsPriceSnapshotDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+
+        <table tableName="ams_publish_region" domainObjectName="AmsPublishRegion" mapperName="AmsPublishRegionDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+
+        <table tableName="ams_publishexception_log" domainObjectName="AmsPublishExceptionLog" mapperName="AmsPublishExceptionLogDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="ams_publishrule_detail" domainObjectName="AmsPublishRuleDetail" mapperName="AmsPublishRuleDetailDao"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table tableName="ams_publishrule_relation" domainObjectName="AmsPublishRuleRelation" mapperName="AmsPublishRuleRelationDao"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
