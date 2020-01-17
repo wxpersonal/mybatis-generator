@@ -15,7 +15,6 @@ public class Generator {
 		List<String> warnings = new ArrayList<String>();
 		boolean overwrite = true;
 		//指定 逆向工程配置文件
-
         URL resource = Generator.class.getResource("generatorConfig.xml");
         File configFile = new File(resource.getPath());
 		ConfigurationParser cp = new ConfigurationParser(warnings);

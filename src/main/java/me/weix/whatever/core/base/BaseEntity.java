@@ -1,4 +1,4 @@
-package me.weix.whatever.base;
+package me.weix.whatever.core.base;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by Administrator on 2017/6/15.
  */
-public class BasePojo implements Serializable {
+public class BaseEntity implements Serializable {
 
     /**
      * 创建人

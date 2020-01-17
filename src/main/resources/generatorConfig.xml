@@ -10,10 +10,10 @@
     <context id="default" targetRuntime="MyBatis3">
 
         <!--自动序列化-->
-        <!--<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
 
         <!-- 自动生成equals方法和hashcode方法 -->
-        <!--<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>-->
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
 
         <plugin type="me.weix.whatever.plugins.LombokPlugin"/>
 
@@ -45,8 +45,7 @@
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
 
-
-        <javaModelGenerator targetPackage="com.mychebao.aucsm.biz.pojo"
+        <javaModelGenerator targetPackage="me.weix.whatever.entity"
                             targetProject="src/main/java" >
 
             <!-- 是否对model添加 构造函数 -->
@@ -56,7 +55,7 @@
             <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
             <property name="immutable" value="false"/>
             <!--实体类父类BasePojo-->
-            <property name="rootClass" value="dragon.core.dal.support.BaseEntity"/>
+            <property name="rootClass" value="me.weix.whatever.core.base.BaseEntity"/>
             <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
             <property name="trimStrings" value="true"/>
 
@@ -73,134 +72,65 @@
                 type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
                 type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
         -->
-        <javaClientGenerator targetPackage="com.mychebao.aucsm.biz.dao"
+        <javaClientGenerator targetPackage="me.weix.whatever.mapper"
                              targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
 
-
-        <!--<table tableName="ams_bidprice" domainObjectName="AmsBidPrice" mapperName="AmsBidPriceDao"
+        <table tableName="t_user" domainObjectName="User" mapperName="UserMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
+            <property name="useActualColumnNames" value="false"/>
         </table>
-        <table tableName="ams_car" domainObjectName="AmsCar" mapperName="AmsCarDao"
+        <table tableName="t_menu" domainObjectName="Menu" mapperName="MenuMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
+            <property name="useActualColumnNames" value="false"/>
         </table>
-
-        <table tableName="ams_car_delaylog" domainObjectName="AmsCarDelayLog" mapperName="AmsCarDelayLogDao"
+        <table tableName="t_permission" domainObjectName="Permission" mapperName="PermissionMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
+            <property name="useActualColumnNames" value="false"/>
         </table>
-        <table tableName="ams_follow" domainObjectName="AmsFollow" mapperName="AmsFollowDao"
+        <table tableName="t_role" domainObjectName="Role" mapperName="RoleMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
+            <property name="useActualColumnNames" value="false"/>
         </table>
-        <table tableName="ams_intellect_bid" domainObjectName="AmsIntellectBid" mapperName="AmsIntellectBidDao"
+        <table tableName="t_user_role" domainObjectName="UserRole" mapperName="UserRoleMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
+            <property name="useActualColumnNames" value="false"/>
         </table>
-        <table tableName="ams_order" domainObjectName="AmsOrder" mapperName="AmsOrderDao"
+        <table tableName="t_role_menu" domainObjectName="RoleMenu" mapperName="RoleMenuMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
+            <property name="useActualColumnNames" value="false"/>
         </table>
-        <table tableName="ams_screen" domainObjectName="AmsScreen" mapperName="AmsScreenDao"
+        <table tableName="t_role_permission" domainObjectName="RolePermission" mapperName="RolePermissionMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
+            <property name="useActualColumnNames" value="false"/>
         </table>
-        <table tableName="ams_screen_conf" domainObjectName="AmsScreenConf" mapperName="AmsScreenConfDao"
+        <table tableName="t_sys_dic" domainObjectName="SysDic" mapperName="SysDicMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
+            <property name="useActualColumnNames" value="false"/>
         </table>
-        <table tableName="ams_win" domainObjectName="AmsWin" mapperName="AmsWinDao"
+        <table tableName="t_sys_file" domainObjectName="SysFile" mapperName="SysFileMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
+            <property name="useActualColumnNames" value="false"/>
         </table>
-        <table tableName="ams_buyerforce" domainObjectName="BuyerForce" mapperName="BuyerForceDao"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-        <table tableName="ams_buyer_operatelog" domainObjectName="BuyerOperateLog" mapperName="BuyerOperateLogDao"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
-        </table>-->
-
-        <!--<table tableName="ams_follow_his" domainObjectName="AmsFollowHis" mapperName="AmsFollowHisDao"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
-        </table>-->
-
-        <!--<table tableName="ams_car_viewlog" domainObjectName="AmsCarViewlog" mapperName="AmsCarViewlogDao"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-        <table tableName="ams_bidlog" domainObjectName="AmsBidLog" mapperName="AmsBidLogDao"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
-        </table>-->
-
-        <table tableName="ams_price_snapshot" domainObjectName="AmsPriceSnapshot" mapperName="AmsPriceSnapshotDao"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-
-        <table tableName="ams_publish_region" domainObjectName="AmsPublishRegion" mapperName="AmsPublishRegionDao"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-
-        <table tableName="ams_publishexception_log" domainObjectName="AmsPublishExceptionLog" mapperName="AmsPublishExceptionLogDao"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-        <table tableName="ams_publishrule_detail" domainObjectName="AmsPublishRuleDetail" mapperName="AmsPublishRuleDetailDao"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-        <table tableName="ams_publishrule_relation" domainObjectName="AmsPublishRuleRelation" mapperName="AmsPublishRuleRelationDao"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-
-
     </context>
 </generatorConfiguration>

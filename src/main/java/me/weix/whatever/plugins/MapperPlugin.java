@@ -31,10 +31,10 @@ public class MapperPlugin extends PluginAdapter {
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.List"));
         interfaze.addMethod(generateSelectByIds(method,
                 introspectedTable));
-//        interfaze.addMethod(generateDeleteLogicById(method,
-//                introspectedTable));
-//        interfaze.addMethod(generateDeleteLogicByIds(method,
-//                introspectedTable));
+        interfaze.addMethod(generateDeleteLogicById(method,
+                introspectedTable));
+        interfaze.addMethod(generateDeleteLogicByIds(method,
+                introspectedTable));
         return true;
     }
 
@@ -50,6 +50,7 @@ public class MapperPlugin extends PluginAdapter {
         // 单个删除
         XmlElement deleteLogicByIdElement = new XmlElement("update");
         deleteLogicByIdElement.addAttribute(new Attribute("id", "deleteLogicById"));
+        deleteLogicByIdElement.addAttribute(new Attribute("parameterType", "java.lang.Integer"));
 
         deleteLogicByIdElement.addElement(
                 new TextElement(
@@ -62,6 +63,7 @@ public class MapperPlugin extends PluginAdapter {
         XmlElement selectByIdsElement = new XmlElement("select");
         selectByIdsElement.addAttribute(new Attribute("id", "selectByIds"));
         selectByIdsElement.addAttribute(new Attribute("resultMap", "BaseResultMap"));
+        selectByIdsElement.addAttribute(new Attribute("parameterType", "java.util.List"));
 
 
         selectByIdsElement.addElement(
@@ -77,6 +79,7 @@ public class MapperPlugin extends PluginAdapter {
         // 批量删除
         XmlElement deleteLogicByIdsElement = new XmlElement("update");
         deleteLogicByIdsElement.addAttribute(new Attribute("id", "deleteLogicByIds"));
+        deleteLogicByIdsElement.addAttribute(new Attribute("parameterType", "java.util.List"));
 
         deleteLogicByIdsElement.addElement(
                 new TextElement(
@@ -96,7 +99,7 @@ public class MapperPlugin extends PluginAdapter {
         m.setVisibility(method.getVisibility());
 
         m.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        m.addParameter(new Parameter(new FullyQualifiedJavaType("Integer[]"), "ids", "@Param(\"ids\")"));
+        m.addParameter(new Parameter(new FullyQualifiedJavaType("List<Integer>"), "ids"));
 
         context.getCommentGenerator().addGeneralMethodComment(m,
                 introspectedTable);
@@ -122,7 +125,7 @@ public class MapperPlugin extends PluginAdapter {
         m.setVisibility(method.getVisibility());
 
         m.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        m.addParameter(new Parameter(new FullyQualifiedJavaType("Integer[]"), "ids", "@Param(\"ids\")"));
+        m.addParameter(new Parameter(new FullyQualifiedJavaType("List<Integer>"), "ids"));
         m.setReturnType(new FullyQualifiedJavaType("java.util.List<"+ introspectedTable.getTableConfiguration().getDomainObjectName()+">"));
         context.getCommentGenerator().addGeneralMethodComment(m,
                 introspectedTable);
