@@ -13,7 +13,7 @@
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
 
         <!-- 自动生成equals方法和hashcode方法 -->
-        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+        <!--<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>-->
 
         <plugin type="me.weix.whatever.plugins.LombokPlugin"/>
 
@@ -78,59 +78,12 @@
         </javaClientGenerator>
 
 
-        <table tableName="t_user" domainObjectName="User" mapperName="UserMapper"
+        <table tableName="t_dept" domainObjectName="Dept" mapperName="DeptMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="false"/>
         </table>
-        <table tableName="t_menu" domainObjectName="Menu" mapperName="MenuMapper"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="false"/>
-        </table>
-        <table tableName="t_permission" domainObjectName="Permission" mapperName="PermissionMapper"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="false"/>
-        </table>
-        <table tableName="t_role" domainObjectName="Role" mapperName="RoleMapper"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="false"/>
-        </table>
-        <table tableName="t_user_role" domainObjectName="UserRole" mapperName="UserRoleMapper"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="false"/>
-        </table>
-        <table tableName="t_role_menu" domainObjectName="RoleMenu" mapperName="RoleMenuMapper"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="false"/>
-        </table>
-        <table tableName="t_role_permission" domainObjectName="RolePermission" mapperName="RolePermissionMapper"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="false"/>
-        </table>
-        <table tableName="t_sys_dic" domainObjectName="SysDic" mapperName="SysDicMapper"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="false"/>
-        </table>
-        <table tableName="t_sys_file" domainObjectName="SysFile" mapperName="SysFileMapper"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="false"/>
-        </table>
+
     </context>
 </generatorConfiguration>
