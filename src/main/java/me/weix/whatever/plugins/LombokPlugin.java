@@ -20,8 +20,10 @@ public class LombokPlugin extends PluginAdapter {
 
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        topLevelClass.addImportedType("lombok.Data");
-        topLevelClass.addAnnotation("@Data");
+        topLevelClass.addImportedType("lombok.Setter");
+        topLevelClass.addAnnotation("@Setter");
+        topLevelClass.addImportedType("lombok.Getter");
+        topLevelClass.addAnnotation("@Getter");
         return true;
     }
 
