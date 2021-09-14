@@ -66,42 +66,27 @@ public class MyCommentGenerator implements CommentGenerator{
      * Java类的类注释
      */
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
-//        if (suppressAllComments) {
-//            return;
-//        }
-//        StringBuilder sb = new StringBuilder();
-//        innerClass.addJavaDocLine("/**");
-//        sb.append(" * ");
-//        sb.append(" * ");
-//        sb.append(introspectedTable.getFullyQualifiedTable());
-//        innerClass.addJavaDocLine(sb.toString().replace("\n", " "));
-//        sb.setLength(0);
-//        sb.append(" * @author ");
-//        sb.append(systemPro.getProperty("user.name"));
-//        sb.append(" ");
-//        sb.append(currentDateStr);
-//        innerClass.addJavaDocLine(" */");
+        if (suppressAllComments) {
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        innerClass.addJavaDocLine("/**");
+        sb.append(" * ");
+        sb.append(" * ");
+        sb.append(introspectedTable.getFullyQualifiedTable());
+        innerClass.addJavaDocLine(sb.toString().replace("\n", " "));
+        sb.setLength(0);
+        sb.append(" * @author ");
+        sb.append(systemPro.getProperty("user.name"));
+        sb.append(" ");
+        sb.append(currentDateStr);
+        innerClass.addJavaDocLine(" */");
     }
 
     /**
      * 为类添加注释
      */
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable, boolean markAsDoNotDelete) {
-//        if (suppressAllComments) {
-//            return;
-//        }
-//        StringBuilder sb = new StringBuilder();
-//        innerClass.addJavaDocLine("/**");
-//        sb.append(" * ");
-//        sb.append(" * ");
-//        sb.append(introspectedTable.getFullyQualifiedTable());
-//        innerClass.addJavaDocLine(sb.toString().replace("\n", " "));
-//        sb.setLength(0);
-//        sb.append(" * @author ");
-//        sb.append(systemPro.getProperty("user.name"));
-//        sb.append(" ");
-//        sb.append(currentDateStr);
-//        innerClass.addJavaDocLine(" */");
     }
 
 
@@ -152,16 +137,6 @@ public class MyCommentGenerator implements CommentGenerator{
      * 为枚举添加注释
      */
     public void addEnumComment(InnerEnum innerEnum, IntrospectedTable introspectedTable) {
-//        if (suppressAllComments) {
-//            return;
-//
-//        }
-//        StringBuilder sb = new StringBuilder();
-//        innerEnum.addJavaDocLine("/**");
-//        sb.append(" * ");
-//        sb.append(introspectedTable.getFullyQualifiedTable());
-//        innerEnum.addJavaDocLine(sb.toString().replace("\n", " "));
-//        innerEnum.addJavaDocLine(" */");
     }
 
     /**
@@ -178,9 +153,6 @@ public class MyCommentGenerator implements CommentGenerator{
         sb.append(introspectedTable.getFullyQualifiedTable());
         field.addJavaDocLine(sb.toString().replace("\n", " "));
         field.addJavaDocLine(" */");
-
-
-
     }
 
     /**
@@ -214,33 +186,12 @@ public class MyCommentGenerator implements CommentGenerator{
      * 给getter方法加注释
      */
     public void addGetterComment(Method method, IntrospectedTable introspectedTable,IntrospectedColumn introspectedColumn) {
-        if (suppressAllComments) {
-            return;
-        }
-        method.addJavaDocLine("/**");
-        StringBuilder sb = new StringBuilder();
-        sb.append(" * ");
-        sb.append(introspectedColumn.getRemarks());
-        method.addJavaDocLine(sb.toString().replace("\n", " "));
-        sb.setLength(0);
-        sb.append(" * @return ");
-        sb.append(introspectedColumn.getActualColumnName());
-        sb.append(" ");
-        sb.append(introspectedColumn.getRemarks());
-        method.addJavaDocLine(sb.toString().replace("\n", " "));
-        method.addJavaDocLine(" */");
     }
 
     /**
      * 给Java文件加注释，这个注释是在文件的顶部，也就是package上面。
      */
     public void addJavaFileComment(CompilationUnit compilationUnit) {
-//        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-//        compilationUnit.addFileCommentLine("/*");
-//        compilationUnit.addFileCommentLine("*");
-//        compilationUnit.addFileCommentLine("* "+compilationUnit.getType().getShortName()+".java");
-//        compilationUnit.addFileCommentLine("* @date "+sdf.format(new Date())+"");
-//        compilationUnit.addFileCommentLine("*/");
     }
 
     /**
@@ -297,22 +248,6 @@ public class MyCommentGenerator implements CommentGenerator{
      * 给setter方法加注释
      */
     public void addSetterComment(Method method, IntrospectedTable introspectedTable,IntrospectedColumn introspectedColumn) {
-        if (suppressAllComments) {
-            return;
-        }
-        method.addJavaDocLine("/**");
-        StringBuilder sb = new StringBuilder();
-        sb.append(" * ");
-        sb.append(introspectedColumn.getRemarks());
-        method.addJavaDocLine(sb.toString().replace("\n", " "));
-        Parameter parm = method.getParameters().get(0);
-        sb.setLength(0);
-        sb.append(" * @param ");
-        sb.append(parm.getName());
-        sb.append(" ");
-        sb.append(introspectedColumn.getRemarks());
-        method.addJavaDocLine(sb.toString().replace("\n", " "));
-        method.addJavaDocLine(" */");
     }
 
 }

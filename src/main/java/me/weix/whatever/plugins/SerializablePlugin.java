@@ -1,16 +1,15 @@
 package me.weix.whatever.plugins;
 
 
-
-import java.util.List;
-import java.util.Properties;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
-import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+
+import java.util.List;
+import java.util.Properties;
 
 public class SerializablePlugin extends PluginAdapter {
     private FullyQualifiedJavaType serializable = new FullyQualifiedJavaType("java.io.Serializable");
@@ -55,14 +54,11 @@ public class SerializablePlugin extends PluginAdapter {
         if (!this.suppressJavaInterface) {
             topLevelClass.addImportedType(this.serializable);
             topLevelClass.addSuperInterface(this.serializable);
-            Field field = new Field();
+            Field field = new Field("serialVersionUID", new FullyQualifiedJavaType("long"));
             field.setFinal(true);
             field.setInitializationString("1L");
-            field.setName("serialVersionUID");
             field.setStatic(true);
-            field.setType(new FullyQualifiedJavaType("long"));
             field.setVisibility(JavaVisibility.PRIVATE);
-
             topLevelClass.addField(field);
         }
 

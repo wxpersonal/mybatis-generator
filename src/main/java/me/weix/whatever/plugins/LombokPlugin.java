@@ -27,11 +27,10 @@ public class LombokPlugin extends PluginAdapter {
         return true;
     }
 
-    @Override
     public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        interfaze.addJavaDocLine("/**");
-        interfaze.addJavaDocLine("* Created by Mybatis Generator " + date2Str(new Date()));
-        interfaze.addJavaDocLine("*/");
+//        interfaze.addJavaDocLine("/**");
+//        interfaze.addJavaDocLine("* Created by Mybatis Generator " + date2Str(new Date()));
+//        interfaze.addJavaDocLine("*/");
         return true;
     }
 
