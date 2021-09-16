@@ -27,9 +27,9 @@
         <!--jdbc的数据库连接 -->
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://localhost:3306/whatever?characterEncoding=utf-8"
+                connectionURL="jdbc:mysql://10.241.151.210:3308/productTrial?characterEncoding=utf-8"
                 userId="root"
-                password="xiang123">
+                password="123456">
         </jdbcConnection>
 
         <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
@@ -38,7 +38,7 @@
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.xiaomi.testplat.camera.model"
+        <javaModelGenerator targetPackage="com.xm.pojo"
                             targetProject="src/main/java" >
 
             <!-- 是否对model添加 构造函数 -->
@@ -65,15 +65,15 @@
                 type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
                 type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
         -->
-        <javaClientGenerator targetPackage="com.xiaomi.testplat.camera.dao"
+        <javaClientGenerator targetPackage="com.xm.mapper"
                              targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
 
-        <table tableName="t_cp_dic" domainObjectName="Dic" mapperName="DicDAO"
+        <table tableName="npt_project_version" domainObjectName="NptProjectVersion" mapperName="NptProjectVersionMapper"
                enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="true"
+               enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="false"/>
         </table>

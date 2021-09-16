@@ -1,9 +1,7 @@
 package me.weix.whatever.plugins;
 
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
@@ -13,13 +11,26 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 
 	@Override
 	public void addElements(XmlElement parentElement) {
+		TextElement selectText = getBaseXml(parentElement);
+		// 公用include
+		XmlElement include = new XmlElement("include");
+		include.addAttribute(new Attribute("refid", "base_query"));
+
+//		addXmlFind(parentElement, selectText, include);
+		addXmlList(parentElement, selectText, include);
+		addXmlSelectByIds(parentElement);
+//		addXmlLogicDeleteById(parentElement);
+//		addXmlLogicDeleteByIds(parentElement);
+	}
+
+	private TextElement getBaseXml(XmlElement parentElement) {
 		// 增加base_query
 		XmlElement sql = new XmlElement("sql");
 		sql.addAttribute(new Attribute("id", "base_query"));
 		//在这里添加where条件
-        XmlElement selectTrimElement = new XmlElement("trim"); //设置trim标签
-        selectTrimElement.addAttribute(new Attribute("prefix", "WHERE"));  
-        selectTrimElement.addAttribute(new Attribute("prefixOverrides", "AND | OR")); //添加where和and
+		XmlElement selectTrimElement = new XmlElement("trim"); //设置trim标签
+		selectTrimElement.addAttribute(new Attribute("prefix", "WHERE"));
+		selectTrimElement.addAttribute(new Attribute("prefixOverrides", "AND | OR")); //添加where和and
 		StringBuilder sb = new StringBuilder();
 		for(IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
 			XmlElement selectNotNullElement = new XmlElement("if"); //$NON-NLS-1$
@@ -41,7 +52,7 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 		}
 		sql.addElement(selectTrimElement);
 		parentElement.addElement(sql);
-		
+
 		// 公用select
 		sb.setLength(0);
 		sb.append("select ");
@@ -50,51 +61,24 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 		sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
 		sb.append(" t");
 		TextElement selectText = new TextElement(sb.toString());
-		
-		// 公用include
-		XmlElement include = new XmlElement("include");
-		include.addAttribute(new Attribute("refid", "base_query"));
-		
-		// 增加find
-		XmlElement find = new XmlElement("select");
-		find.addAttribute(new Attribute("id", "find"));
-		find.addAttribute(new Attribute("resultMap", "BaseResultMap"));
-		find.addAttribute(new Attribute("parameterType", introspectedTable.getBaseRecordType()));
-		find.addElement(selectText);
-		find.addElement(include);
-		parentElement.addElement(find);
+		return selectText;
+	}
 
-//		// 增加list
-//		XmlElement list = new XmlElement("select");
-//		list.addAttribute(new Attribute("id", "list"));
-//		list.addAttribute(new Attribute("resultMap", "BaseResultMap"));
-//		list.addAttribute(new Attribute("parameterType", introspectedTable.getBaseRecordType()));
-//		list.addElement(selectText);
-//		list.addElement(include);
-//		parentElement.addElement(list);
-//
-//		// 增加pageList
-//		XmlElement pageList = new XmlElement("select");
-//		pageList.addAttribute(new Attribute("id", "pageList"));
-//		pageList.addAttribute(new Attribute("resultMap", "BaseResultMap"));
-//		pageList.addAttribute(new Attribute("parameterType", introspectedTable.getBaseRecordType()));
-//		pageList.addElement(selectText);
-//		pageList.addElement(include);
-//		parentElement.addElement(pageList);
+	private void addXmlLogicDeleteByIds(XmlElement parentElement) {
+		XmlElement deleteLogicByIdsElement = new XmlElement("update");
+		deleteLogicByIdsElement.addAttribute(new Attribute("id", "deleteLogicByIds"));
+		deleteLogicByIdsElement.addAttribute(new Attribute("parameterType", "java.util.List"));
 
-		// 单个逻辑删除
-		XmlElement deleteLogicByIdElement = new XmlElement("update");
-		deleteLogicByIdElement.addAttribute(new Attribute("id", "deleteLogicById"));
-		deleteLogicByIdElement.addAttribute(new Attribute("parameterType", "java.lang.Integer"));
-
-		deleteLogicByIdElement.addElement(
+		deleteLogicByIdsElement.addElement(
 				new TextElement(
-						"update " + introspectedTable.getFullyQualifiedTableNameAtRuntime() + " set deleted = 1 where id = #{id} "
+						"update " + introspectedTable.getFullyQualifiedTableNameAtRuntime() + " set deleted = 1 where id in \n"
+								+ "\t<foreach item=\"item\" index=\"index\" collection=\"ids\" open=\"(\" separator=\",\" close=\")\">#{item}</foreach> "
 				));
 
-		parentElement.addElement(deleteLogicByIdElement);
+		parentElement.addElement(deleteLogicByIdsElement);
+	}
 
-		// 批量查询
+	private void addXmlSelectByIds(XmlElement parentElement) {
 		XmlElement selectByIdsElement = new XmlElement("select");
 		selectByIdsElement.addAttribute(new Attribute("id", "selectByIds"));
 		selectByIdsElement.addAttribute(new Attribute("resultMap", "BaseResultMap"));
@@ -110,19 +94,41 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 				));
 
 		parentElement.addElement(selectByIdsElement);
+	}
 
-		// 批量删除
-		XmlElement deleteLogicByIdsElement = new XmlElement("update");
-		deleteLogicByIdsElement.addAttribute(new Attribute("id", "deleteLogicByIds"));
-		deleteLogicByIdsElement.addAttribute(new Attribute("parameterType", "java.util.List"));
+	private void addXmlLogicDeleteById(XmlElement parentElement) {
+		XmlElement deleteLogicByIdElement = new XmlElement("update");
+		deleteLogicByIdElement.addAttribute(new Attribute("id", "deleteLogicById"));
+		deleteLogicByIdElement.addAttribute(new Attribute("parameterType", "java.lang.Integer"));
 
-		deleteLogicByIdsElement.addElement(
+		deleteLogicByIdElement.addElement(
 				new TextElement(
-						"update " + introspectedTable.getFullyQualifiedTableNameAtRuntime() + " set deleted = 1 where id in \n"
-								+ "\t<foreach item=\"item\" index=\"index\" collection=\"ids\" open=\"(\" separator=\",\" close=\")\">#{item}</foreach> "
+						"update " + introspectedTable.getFullyQualifiedTableNameAtRuntime() + " set deleted = 1 where id = #{id} "
 				));
 
-		parentElement.addElement(deleteLogicByIdsElement);
+		parentElement.addElement(deleteLogicByIdElement);
+	}
+
+	private void addXmlFind(XmlElement parentElement, TextElement selectText, XmlElement include) {
+		// 增加find
+		XmlElement find = new XmlElement("select");
+		find.addAttribute(new Attribute("id", "find"));
+		find.addAttribute(new Attribute("resultMap", "BaseResultMap"));
+		find.addAttribute(new Attribute("parameterType", introspectedTable.getBaseRecordType()));
+		find.addElement(selectText);
+		find.addElement(include);
+		parentElement.addElement(find);
+	}
+
+	private void addXmlList(XmlElement parentElement, TextElement selectText, XmlElement include) {
+		// 增加find
+		XmlElement find = new XmlElement("select");
+		find.addAttribute(new Attribute("id", "list"));
+		find.addAttribute(new Attribute("resultMap", "BaseResultMap"));
+		find.addAttribute(new Attribute("parameterType", introspectedTable.getBaseRecordType()));
+		find.addElement(selectText);
+		find.addElement(include);
+		parentElement.addElement(find);
 	}
 
 }
