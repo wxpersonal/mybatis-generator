@@ -20,11 +20,36 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 		addInterfaceSelectByCondition(interfaze);
 //		addInterfacePageList(interfaze);
 		addInterfaceDeleteByIds(interfaze);
+		addInterfaceBatchInsert(interfaze);
+	}
+
+	private void addInterfaceBatchInsert(Interface interfaze) {
+		// 先创建import对象
+		Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
+		// 添加List的包
+		importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
+		// 创建方法对象
+		Method method = new Method("batchInsert");
+		// 设置该方法为public
+		method.setVisibility(JavaVisibility.PUBLIC);
+		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+		// 设置参数类型是对象
+		FullyQualifiedJavaType parameterType;
+		parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
+		// import参数类型对象
+		importedTypes.add(parameterType);
+		// 为方法添加参数，变量名称record
+		method.addParameter(new Parameter(new FullyQualifiedJavaType("List<"+parameterType.getShortName()+">"), "records", "@Param(\"records\")"));
+		context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+		if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
+			interfaze.addImportedTypes(importedTypes);
+			interfaze.addMethod(method);
+		}
 	}
 	
 	private void addInterfaceFind(Interface interfaze) {
 		// 先创建import对象
-		Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+		Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 		// 添加List的包
 		importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
 		// 创建方法对象
@@ -45,7 +70,6 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 		// 为方法添加参数，变量名称record
 		method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
 		//
-		addMapperAnnotations(interfaze, method);
 		context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 		if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
 			interfaze.addImportedTypes(importedTypes);
@@ -80,7 +104,7 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 	 */
 	private void addInterfaceDeleteByIds(Interface interfaze) {
 		// 先创建import对象
-		Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+		Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 		Method method = new Method("deleteByIds");
 		method.setVisibility(JavaVisibility.PUBLIC);
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
@@ -126,7 +150,7 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 	
 	private void addInterfaceSelectByCondition(Interface interfaze) {
 		// 先创建import对象
-		Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+		Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 		// 添加Lsit的包
 		importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
 		// 创建方法对象
@@ -154,7 +178,6 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 		// 为方法添加参数，变量名称record
 		method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
 		//
-		addMapperAnnotations(interfaze, method);
 		context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 		if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
 			interfaze.addImportedTypes(importedTypes);
@@ -164,7 +187,7 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 //
 	private void addInterfacePageList(Interface interfaze) {
 		// 先创建import对象
-		Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+		Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 		// 添加Page的包
 		importedTypes.add(new FullyQualifiedJavaType("com.github.pagehelper.Page"));
 		// 创建方法对象
@@ -192,7 +215,6 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 		// 为方法添加参数，变量名称record
 		method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
 		//
-		addMapperAnnotations(interfaze, method);
 		context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 		if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
 			interfaze.addImportedTypes(importedTypes);
@@ -200,6 +222,4 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 		}
 	}
 
-	public void addMapperAnnotations(Interface interfaze, Method method) {
-	}
 }

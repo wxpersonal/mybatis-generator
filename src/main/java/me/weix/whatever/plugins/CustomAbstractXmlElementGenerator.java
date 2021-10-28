@@ -1,11 +1,19 @@
 package me.weix.whatever.plugins;
 
 import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.OutputUtilities;
+import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerator {
 
@@ -22,7 +30,9 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 //		addXmlLogicDeleteById(parentElement);
 //		addXmlLogicDeleteByIds(parentElement);
 		addXmlDeleteByIds(parentElement);
+		addXmlBatchInsert(parentElement);
 	}
+
 
 	private TextElement getBaseXml(XmlElement parentElement) {
 		// 增加base_query
@@ -98,8 +108,6 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 		selectByIdsElement.addAttribute(new Attribute("id", "selectByIds"));
 		selectByIdsElement.addAttribute(new Attribute("resultMap", "BaseResultMap"));
 		selectByIdsElement.addAttribute(new Attribute("parameterType", "java.util.List"));
-
-
 		selectByIdsElement.addElement(
 				new TextElement(
 						"select \n"
@@ -141,9 +149,68 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 		find.addAttribute(new Attribute("id", "selectByCondition"));
 		find.addAttribute(new Attribute("resultMap", "BaseResultMap"));
 		find.addAttribute(new Attribute("parameterType", introspectedTable.getBaseRecordType()));
+		new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
+
 		find.addElement(selectText);
 		find.addElement(include);
 		parentElement.addElement(find);
+	}
+
+	private void addXmlBatchInsert(XmlElement parentElement) {
+
+		// 增加find
+		XmlElement batchInsert = new XmlElement("insert");
+		batchInsert.addAttribute(new Attribute("id", "batchInsert"));
+		batchInsert.addAttribute(new Attribute("parameterType", "java.util.List"));
+		StringBuilder insertClause = new StringBuilder();
+		StringBuilder valuesClause = new StringBuilder();
+		insertClause.append("insert into ");
+		insertClause.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
+		insertClause.append(" (");
+		valuesClause.append(" (");
+
+		XmlElement foreachElement = new XmlElement("foreach"); //设置foreach标签
+		foreachElement.addAttribute(new Attribute("collection", "list"));
+		foreachElement.addAttribute(new Attribute("item", "item"));
+		foreachElement.addAttribute(new Attribute("separator", ","));
+
+		List<String> valuesClauses = new ArrayList<>();
+		List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
+		for(int i = 0; i < columns.size(); i++) {
+			IntrospectedColumn introspectedColumn = columns.get(i);
+			insertClause.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
+			String parameterClause = MyBatis3FormattingUtilities.getParameterClause(introspectedColumn);
+			String str1 = parameterClause.substring(0, parameterClause.indexOf('{') + 1);
+			String str2 = parameterClause.substring(parameterClause.indexOf('{') + 1);
+			valuesClause.append(str1).append("item.").append(str2);
+
+			if(i + 1 < columns.size()) {
+				insertClause.append(", ");
+				valuesClause.append(", ");
+			}
+
+			if (valuesClause.length() > 80) {
+				batchInsert.addElement(new TextElement(insertClause.toString()));
+				insertClause.setLength(0);
+				OutputUtilities.xmlIndent(insertClause, 1);
+
+				valuesClauses.add(valuesClause.toString());
+				valuesClause.setLength(0);
+				OutputUtilities.xmlIndent(valuesClause, 1);
+			}
+		}
+
+		insertClause.append(") values ");
+		valuesClause.append(')');
+
+		valuesClauses.add(valuesClause.toString());
+		for (String clause : valuesClauses) {
+			foreachElement.addElement(new TextElement(clause));
+		}
+		batchInsert.addElement(new TextElement(insertClause.toString()));
+		batchInsert.addElement(foreachElement);
+		parentElement.addElement(batchInsert);
+
 	}
 
 }
