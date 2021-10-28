@@ -1,6 +1,6 @@
 package me.weix.whatever.plugins;
 
-import org.mybatis.generator.api.IntrospectedTable;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 
@@ -11,13 +11,15 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 
 	@Override
 	public void addInterfaceElements(Interface interfaze) {
-		
+		interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
+		interfaze.addImportedType(new FullyQualifiedJavaType("java.util.List"));
 //		addInterfaceFind(interfaze);
 //		addInterfaceDeleteLogicById(interfaze);
 //		addInterfaceDeleteLogicByIds(interfaze);
 		addInterfaceSelectByIds(interfaze);
-		addInterfaceList(interfaze);
+		addInterfaceSelectByCondition(interfaze);
 //		addInterfacePageList(interfaze);
+		addInterfaceDeleteByIds(interfaze);
 	}
 	
 	private void addInterfaceFind(Interface interfaze) {
@@ -60,7 +62,29 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 		Method method = new Method("deleteLogicByIds");
 		method.setVisibility(JavaVisibility.PUBLIC);
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-		method.addParameter(new Parameter(new FullyQualifiedJavaType("Integer[]"), "ids"));
+		method.addParameter(new Parameter(new FullyQualifiedJavaType("Integer[]"), "ids", "@Param(\"ids\")"));
+		context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+		// 设置参数类型是对象
+		FullyQualifiedJavaType parameterType;
+		parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
+		// import参数类型对象
+		importedTypes.add(parameterType);
+		if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
+			interfaze.addImportedTypes(importedTypes);
+			interfaze.addMethod(method);
+		}
+	}
+
+	/*
+	 * Dao中添加方法
+	 */
+	private void addInterfaceDeleteByIds(Interface interfaze) {
+		// 先创建import对象
+		Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+		Method method = new Method("deleteByIds");
+		method.setVisibility(JavaVisibility.PUBLIC);
+		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+		method.addParameter(new Parameter(new FullyQualifiedJavaType("Integer[]"), "ids", "@Param(\"ids\")"));
 		context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 		// 设置参数类型是对象
 		FullyQualifiedJavaType parameterType;
@@ -88,10 +112,11 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 
 	private void addInterfaceSelectByIds(Interface interfaze) {
 
+
 		Method method = new Method("selectByIds");
 		method.setVisibility(JavaVisibility.PUBLIC);
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-		method.addParameter(new Parameter(new FullyQualifiedJavaType("List<Integer>"), "ids"));
+		method.addParameter(new Parameter(new FullyQualifiedJavaType("List<Integer>"), "ids", "@Param(\"ids\")"));
 		method.setReturnType(new FullyQualifiedJavaType("java.util.List<"+ introspectedTable.getTableConfiguration().getDomainObjectName()+">"));
 		context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 		if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
@@ -99,7 +124,7 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 		}
 	}
 	
-	private void addInterfaceList(Interface interfaze) {
+	private void addInterfaceSelectByCondition(Interface interfaze) {
 		// 先创建import对象
 		Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
 		// 添加Lsit的包
@@ -119,7 +144,7 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 		// 方法对象设置返回类型对象
 		method.setReturnType(returnType);
 		// 设置方法名称为我们在IntrospectedTable类中初始化的 “selectByObject”
-		method.setName("list");
+		method.setName("selectByCondition");
 
 		// 设置参数类型是对象
 		FullyQualifiedJavaType parameterType;

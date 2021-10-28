@@ -27,7 +27,7 @@
         <!--jdbc的数据库连接 -->
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://10.241.151.210:3308/productTrial?characterEncoding=utf-8"
+                connectionURL="jdbc:mysql://10.241.151.210:3308/productTrial?useSSL=false&amp;serverTimezone=UTC"
                 userId="root"
                 password="123456">
         </jdbcConnection>
@@ -55,7 +55,7 @@
         </javaModelGenerator>
 
         <!--Mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
-        <sqlMapGenerator targetPackage="mybatis.mapper"
+        <sqlMapGenerator targetPackage="mapper"
                          targetProject="src/main/resources">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
@@ -71,7 +71,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="npt_project_version" domainObjectName="NptProjectVersion" mapperName="NptProjectVersionMapper"
+        <table tableName="npt_user_role" domainObjectName="NptUserRole" mapperName="NptUserRoleMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

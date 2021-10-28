@@ -17,10 +17,11 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 		include.addAttribute(new Attribute("refid", "base_query"));
 
 //		addXmlFind(parentElement, selectText, include);
-		addXmlList(parentElement, selectText, include);
+		addXmlSelectByCondition(parentElement, selectText, include);
 		addXmlSelectByIds(parentElement);
 //		addXmlLogicDeleteById(parentElement);
 //		addXmlLogicDeleteByIds(parentElement);
+		addXmlDeleteByIds(parentElement);
 	}
 
 	private TextElement getBaseXml(XmlElement parentElement) {
@@ -78,6 +79,20 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 		parentElement.addElement(deleteLogicByIdsElement);
 	}
 
+	private void addXmlDeleteByIds(XmlElement parentElement) {
+		XmlElement deleteByIdsElement = new XmlElement("delete");
+		deleteByIdsElement.addAttribute(new Attribute("id", "deleteByIds"));
+		deleteByIdsElement.addAttribute(new Attribute("parameterType", "java.util.List"));
+
+		deleteByIdsElement.addElement(
+				new TextElement(
+						"delete from " + introspectedTable.getFullyQualifiedTableNameAtRuntime() + " where id in \n"
+								+ "\t<foreach item=\"item\" index=\"index\" collection=\"ids\" open=\"(\" separator=\",\" close=\")\">#{item}</foreach> "
+				));
+
+		parentElement.addElement(deleteByIdsElement);
+	}
+
 	private void addXmlSelectByIds(XmlElement parentElement) {
 		XmlElement selectByIdsElement = new XmlElement("select");
 		selectByIdsElement.addAttribute(new Attribute("id", "selectByIds"));
@@ -120,10 +135,10 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 		parentElement.addElement(find);
 	}
 
-	private void addXmlList(XmlElement parentElement, TextElement selectText, XmlElement include) {
+	private void addXmlSelectByCondition(XmlElement parentElement, TextElement selectText, XmlElement include) {
 		// 增加find
 		XmlElement find = new XmlElement("select");
-		find.addAttribute(new Attribute("id", "list"));
+		find.addAttribute(new Attribute("id", "selectByCondition"));
 		find.addAttribute(new Attribute("resultMap", "BaseResultMap"));
 		find.addAttribute(new Attribute("parameterType", introspectedTable.getBaseRecordType()));
 		find.addElement(selectText);
