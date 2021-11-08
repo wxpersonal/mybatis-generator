@@ -1,8 +1,10 @@
 package me.weix.whatever.plugins;
 
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -37,7 +39,7 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 		// import参数类型对象
 		importedTypes.add(parameterType);
 		// 为方法添加参数，变量名称record
-		method.addParameter(new Parameter(new FullyQualifiedJavaType("List<"+parameterType.getShortName()+">"), "records", "@Param(\"records\")"));
+		method.addParameter(new Parameter(new FullyQualifiedJavaType("List<"+parameterType.getShortName()+">"), "records"));
 		context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 		if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
 			interfaze.addImportedTypes(importedTypes);
@@ -54,7 +56,13 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 		Method method = new Method("deleteByIds");
 		method.setVisibility(JavaVisibility.PUBLIC);
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-		method.addParameter(new Parameter(new FullyQualifiedJavaType("Integer[]"), "ids", "@Param(\"ids\")"));
+
+		List<IntrospectedColumn> introspectedColumns = introspectedTable.getPrimaryKeyColumns();
+		for (IntrospectedColumn introspectedColumn : introspectedColumns) {
+			FullyQualifiedJavaType type = introspectedColumn.getFullyQualifiedJavaType();
+			method.addParameter(new Parameter(new FullyQualifiedJavaType("List<"+type.getShortName()+">"), "ids"));
+		}
+
 		context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 		// 设置参数类型是对象
 		FullyQualifiedJavaType parameterType;
@@ -73,7 +81,13 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 		Method method = new Method("selectByIds");
 		method.setVisibility(JavaVisibility.PUBLIC);
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-		method.addParameter(new Parameter(new FullyQualifiedJavaType("List<Integer>"), "ids", "@Param(\"ids\")"));
+
+		List<IntrospectedColumn> introspectedColumns = introspectedTable.getPrimaryKeyColumns();
+		for (IntrospectedColumn introspectedColumn : introspectedColumns) {
+			FullyQualifiedJavaType type = introspectedColumn.getFullyQualifiedJavaType();
+			method.addParameter(new Parameter(new FullyQualifiedJavaType("List<"+type.getShortName()+">"), "ids"));
+		}
+
 		method.setReturnType(new FullyQualifiedJavaType("java.util.List<"+ introspectedTable.getTableConfiguration().getDomainObjectName()+">"));
 		context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 		if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {

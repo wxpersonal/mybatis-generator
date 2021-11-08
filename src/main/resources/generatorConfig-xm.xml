@@ -71,7 +71,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="npt_user_role" domainObjectName="NptUserRole" mapperName="NptUserRoleMapper"
+        <table tableName="npt_project_info" domainObjectName="NptProjectInfo" mapperName="NptProjectInfoMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

@@ -37,7 +37,7 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 		deleteByIdsElement.addElement(
 				new TextElement(
 						"delete from " + introspectedTable.getFullyQualifiedTableNameAtRuntime() + " where id in \n"
-								+ "\t<foreach item=\"item\" index=\"index\" collection=\"ids\" open=\"(\" separator=\",\" close=\")\">#{item}</foreach> "
+								+ "\t<foreach item=\"item\" index=\"index\" collection=\"list\" open=\"(\" separator=\",\" close=\")\">#{item}</foreach> "
 				));
 
 		parentElement.addElement(deleteByIdsElement);
@@ -53,7 +53,7 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 						"select \n"
 								+"\t<include refid=\"Base_Column_List\" />\n"
 								+"\tfrom " + introspectedTable.getFullyQualifiedTableNameAtRuntime() + "\n"
-								+"\twhere id in <foreach item=\"item\" index=\"index\" collection=\"ids\" open=\"(\" separator=\",\" close=\")\">#{item}</foreach> "
+								+"\twhere id in <foreach item=\"item\" index=\"index\" collection=\"list\" open=\"(\" separator=\",\" close=\")\">#{item}</foreach> "
 				));
 
 		parentElement.addElement(selectByIdsElement);
@@ -183,7 +183,7 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 		deleteLogicByIdsElement.addElement(
 				new TextElement(
 						"update " + introspectedTable.getFullyQualifiedTableNameAtRuntime() + " set deleted = 1 where id in \n"
-								+ "\t<foreach item=\"item\" index=\"index\" collection=\"ids\" open=\"(\" separator=\",\" close=\")\">#{item}</foreach> "
+								+ "\t<foreach item=\"item\" index=\"index\" collection=\"list\" open=\"(\" separator=\",\" close=\")\">#{item}</foreach> "
 				));
 
 		parentElement.addElement(deleteLogicByIdsElement);
