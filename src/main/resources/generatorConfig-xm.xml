@@ -5,8 +5,6 @@
 
 <generatorConfiguration>
 
-    <properties resource="db.properties"></properties>
-
     <context id="default" targetRuntime="MyBatis3">
 
         <!--自动序列化-->
@@ -26,8 +24,8 @@
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <!--jdbc的数据库连接 -->
         <jdbcConnection
-                driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://10.241.151.210:3308/productTrial?useSSL=false&amp;serverTimezone=UTC"
+                driverClass="com.mysql.cj.jdbc.Driver"
+                connectionURL="jdbc:mysql://10.241.151.210:3309/demandmanagement?useSSL=false&amp;serverTimezone=UTC"
                 userId="root"
                 password="123456">
         </jdbcConnection>
@@ -71,11 +69,14 @@
         </javaClientGenerator>
 
 
-        <table tableName="npt_project_info" domainObjectName="NptProjectInfo" mapperName="NptProjectInfoMapper"
+        <table tableName="dm_project_demand_info" domainObjectName="ProjectDemandInfo" mapperName="DmProjectDemandInfoMapper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="false"/>
+            <columnOverride column="summary" javaType="java.lang.String" jdbcType="TEXT"/>
+            <columnOverride column="description" javaType="java.lang.String" jdbcType="TEXT"/>
+            <columnOverride column="demand_remark" javaType="java.lang.String" jdbcType="TEXT"/>
         </table>
 
     </context>

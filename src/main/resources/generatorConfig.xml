@@ -19,6 +19,16 @@
 
         <plugin type="me.weix.whatever.plugins.MapperPlugin"/>
 
+        <plugin type="com.itfsw.mybatis.generator.plugins.LogicalDeletePlugin">
+            <!-- 这里配置的是全局逻辑删除列和逻辑删除值，当然在table中配置的值会覆盖该全局配置 -->
+            <!-- 逻辑删除列类型只能为数字、字符串或者布尔类型 -->
+            <property name="logicalDeleteColumn" value="deleted"/>
+            <!-- 逻辑删除-已删除值 -->
+            <property name="logicalDeleteValue" value="1"/>
+            <!-- 逻辑删除-未删除值 -->
+            <property name="logicalUnDeleteValue" value="0"/>
+        </plugin>
+
         <commentGenerator type="me.weix.whatever.plugins.MyCommentGenerator">
         </commentGenerator>
 
@@ -78,9 +88,9 @@
         </javaClientGenerator>
 
 
-        <table tableName="t_dept" domainObjectName="Dept" mapperName="DeptMapper"
+        <table tableName="dm_project_info" domainObjectName="ProjectInfo" mapperName="ProjectInfoMapper"
                enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"  enableDeleteByPrimaryKey="false"
                selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="false"/>
         </table>

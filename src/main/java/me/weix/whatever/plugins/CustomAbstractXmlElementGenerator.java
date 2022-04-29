@@ -15,6 +15,7 @@ import java.util.List;
 
 public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerator {
 
+	private static String DELETE_COL = "delete_flag";
 	@Override
 	public void addElements(XmlElement parentElement) {
 		// 公用include
@@ -123,7 +124,7 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 		foreachElement.addAttribute(new Attribute("item", "item"));
 		foreachElement.addAttribute(new Attribute("separator", ","));
 
-		List<String> valuesClauses = new ArrayList<>();
+		List<String> valuesClauses = new ArrayList<String>();
 		List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
 		for(int i = 0; i < columns.size(); i++) {
 			IntrospectedColumn introspectedColumn = columns.get(i);
@@ -169,7 +170,7 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 
 		deleteLogicByIdElement.addElement(
 				new TextElement(
-						"update " + introspectedTable.getFullyQualifiedTableNameAtRuntime() + " set deleted = 1 where id = #{id} "
+						"update " + introspectedTable.getFullyQualifiedTableNameAtRuntime() + " set " + DELETE_COL + " = 1 where id = #{id} "
 				));
 
 		parentElement.addElement(deleteLogicByIdElement);
@@ -182,7 +183,7 @@ public class CustomAbstractXmlElementGenerator extends AbstractXmlElementGenerat
 
 		deleteLogicByIdsElement.addElement(
 				new TextElement(
-						"update " + introspectedTable.getFullyQualifiedTableNameAtRuntime() + " set deleted = 1 where id in \n"
+						"update " + introspectedTable.getFullyQualifiedTableNameAtRuntime() + " set " + DELETE_COL +" = 1 where id in \n"
 								+ "\t<foreach item=\"item\" index=\"index\" collection=\"list\" open=\"(\" separator=\",\" close=\")\">#{item}</foreach> "
 				));
 
